@@ -1,0 +1,38 @@
+.mystyle {
+    font-size: 11pt; 
+    font-family: 'D2Coding';
+    border-collapse: collapse; 
+    border: 10px solid silver;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+}
+
+.mystyle td, th {
+    padding: 5px;
+}
+
+
+.mystyle tr:nth-child(even) {
+    background: #E0E0E0;
+}
+
+.mystyle tr:hover {
+    background: silver;
+    cursor: pointer;
+}
+
+.ui.sidebar{
+	width:100px;
+}
+
+
+
+
+
+
+
+

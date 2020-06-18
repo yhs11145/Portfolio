@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1119</width>
+    <height>495</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>D2Coding</family>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>1071</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>플레이오토2</string>
+     </attribute>
+     <widget class="QWidget" name="gridLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>701</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_41">
+         <property name="text">
+          <string>아이디</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>japastoremaster7@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>wizgardenmaster@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>banyhousemaster@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>gtcometruemaster@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>dolcevitamaster7@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>salefikoreamaster@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>sodamfoodmaster@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>sellallmaster@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>yoonhsryan@gmail.com</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>dorothymaster7@gmail.com</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QComboBox" name="ShoppingCombo">
+         <item>
+          <property name="text">
+           <string>쇼핑몰전체</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>옥션</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>지마켓</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>인터파크-B</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>인터파크</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>스마트스토어</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>11번가</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>쿠팡</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>NH마켓</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>카카오톡 스토어</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>위메프2.0</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>티몬(오픈마켓)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QComboBox" name="DeliveryCombo">
+         <item>
+          <property name="text">
+           <string>배송처 전체</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DT</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DT_XTS</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>FD_002</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>FD_025</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>FR</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ON</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>SU</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="comboBox_2">
+         <item>
+          <property name="text">
+           <string>akdntmzlqhem1@</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>!ghkd02161230</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>galaxyedge6+</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_42">
+         <property name="text">
+          <string>비밀번호</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="OKButton">
+         <property name="text">
+          <string>확인</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="RegisterCombo">
+         <item>
+          <property name="text">
+           <string>계정전체</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>SDF</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>WZG</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DRT</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DRF</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>BNH</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>SFK</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QComboBox" name="NumberCombo">
+         <item>
+          <property name="text">
+           <string>상품등록개수</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>10건</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>25건</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>50건</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>100건</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>300건</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>500건</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QComboBox" name="StateCombo">
+         <item>
+          <property name="text">
+           <string>상품상태 전체</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>판매대기</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>판매중</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>수정대기</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QPushButton" name="WDelButton">
+         <property name="text">
+          <string>작업삭제</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QComboBox" name="comboBox_3">
+         <item>
+          <property name="text">
+           <string>상품전제</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>주문</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>문의</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QComboBox" name="comboBox_4">
+         <item>
+          <property name="text">
+           <string>완료</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>오류</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="nameEdit"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab2">
+     <attribute name="title">
+      <string>도매토피아</string>
+     </attribute>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>323</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="DDSButton">
+         <property name="text">
+          <string>DDS</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="DSSButton">
+         <property name="text">
+          <string>DSS</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="DBSButton">
+         <property name="text">
+          <string>DBS</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="DPRICEButton">
+         <property name="text">
+          <string>DDP</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLineEdit" name="DExcelEdit">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>20</y>
+        <width>451</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>엑셀경로 :</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>50</y>
+        <width>191</width>
+        <height>92</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>DDS : 도로시 주문확정</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>DSS  : 세일파이 주문확정</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_26">
+         <property name="text">
+          <string>DBS : 바나하우스 주문확정</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_19">
+         <property name="text">
+          <string>DDP : 도매토피아 원가</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab3">
+     <attribute name="title">
+      <string>플레이오토 상품수</string>
+     </attribute>
+     <widget class="QPushButton" name="PANButton">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>60</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>시작하기</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="PANText">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>20</y>
+        <width>401</width>
+        <height>331</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>마켓 상품삭제</string>
+     </attribute>
+     <widget class="QWidget" name="gridLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>130</y>
+        <width>332</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="3">
+        <widget class="QPushButton" name="GE2Button">
+         <property name="text">
+          <string>GE2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="GE1Button">
+         <property name="text">
+          <string>GE1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="AE1Button">
+         <property name="text">
+          <string>AE1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="AE2Button">
+         <property name="text">
+          <string>AE2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="NHButton">
+         <property name="text">
+          <string>NHM</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="InterparkButton">
+         <property name="text">
+          <string>IPM</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="BunButton">
+         <property name="text">
+          <string>BBM</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="SmartstoreButton">
+         <property name="text">
+          <string>SSM</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLabel" name="label_17">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>40</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>아이디: </string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>45</x>
+        <y>80</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>비밀번호:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="MIDEdit">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>40</y>
+        <width>341</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="MPWEdit">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>80</y>
+        <width>341</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="verticalLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>130</y>
+        <width>191</width>
+        <height>164</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>AE1 : 옥션 ESM 판매가능</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>AE2: 옥션 ESM 판매중지</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>GE1 : G마켓 ESM 판매가능</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>GE2 : G마켓 ESM 판매중지</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_28">
+         <property name="text">
+          <string>NHM : NH마켓 상품삭제</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_29">
+         <property name="text">
+          <string>IPM : 인터파크 상품삭제</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_30">
+         <property name="text">
+          <string>SSM : 스마트스포어 상품삭제</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>도매토피아 엑셀</string>
+     </attribute>
+     <widget class="QWidget" name="formLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>20</y>
+        <width>571</width>
+        <height>86</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_37">
+         <property name="text">
+          <string>엑셀경로</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="PEEdit"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_38">
+         <property name="text">
+          <string>비밀번호</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_39">
+         <property name="text">
+          <string>아이디</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="PEPWEdit"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="PEIDEdit"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>130</y>
+        <width>511</width>
+        <height>188</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="3" column="0">
+        <widget class="QPushButton" name="HSDButton">
+         <property name="text">
+          <string>HSD</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="ASDButton">
+         <property name="text">
+          <string>ASD</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="ISDButton">
+         <property name="text">
+          <string>ISD</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="NSDButton">
+         <property name="text">
+          <string>NSD</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="GSSButton">
+         <property name="text">
+          <string>GSS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="GSBButton">
+         <property name="text">
+          <string>GSB</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="ASSButton">
+         <property name="text">
+          <string>ASS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="ISSButton">
+         <property name="text">
+          <string>ISS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="ISBButton">
+         <property name="text">
+          <string>ISB</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="HSSButton">
+         <property name="text">
+          <string>HSS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="ASBButton">
+         <property name="text">
+          <string>ASB</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QPushButton" name="NSSButton">
+         <property name="text">
+          <string>NSS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QPushButton" name="NSBButton">
+         <property name="text">
+          <string>NSB</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QPushButton" name="HSBButton">
+         <property name="text">
+          <string>HSB</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="GSDButton">
+         <property name="text">
+          <string>GSD</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="KSDButton">
+         <property name="text">
+          <string>KSD</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="KSSButton">
+         <property name="text">
+          <string>KSS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QPushButton" name="KSBButton">
+         <property name="text">
+          <string>KSB</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="verticalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>130</y>
+        <width>221</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_31">
+         <property name="text">
+          <string>GSB : G마켓 엑셀선택</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_33">
+         <property name="text">
+          <string>ISB  : 인터파크 엑셀선택</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_34">
+         <property name="text">
+          <string>HSB : NH마켓 엑셀선택</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_36">
+         <property name="text">
+          <string>KSB : 11번가 엑셀선택</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_32">
+         <property name="text">
+          <string>ASB : 옥션 엑셀선택</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_35">
+         <property name="text">
+          <string>NSB : 네이버 엑셀선택</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

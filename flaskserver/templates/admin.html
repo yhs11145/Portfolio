@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    </head>
+    <body>
+        <form action='/refund' class="row text-center" style="width:100% float:none; margin:0 auto">
+            <input type="submit" name="refund" value="환불금검색" class="btn btn-outline-primary">
+        </form>
+        <form action='/qa' class="row text-center" style="width:100% float:none; margin:0 auto">
+            <input type="submit" name="qa" value="일대일문의검색" class="btn btn-outline-primary">
+        </form>
+        <form action='/refundpage' class="row text-center" style="width:100% float:none; margin:0 auto">
+                <input type="submit" name="refundpage" value="환불금조회" class="btn btn-outline-primary">
+        </form>
+        <form action='/qapage' class="row text-center" style="width:100% float:none; margin:0 auto">
+            <input type="submit" name="qapage" value="일대일문의조회" class="btn btn-outline-primary">
+        </form>
+        <form action='/upload' class="row text-center" style="width:100% float:none; margin:0 auto">
+            <input type="submit" name="upload" value="업로드하기" class="btn btn-outline-primary">
+        </form>
+        <form action='/user/{{id}}' method="post" class="row text-center" style="width:100% float:none; margin:0 auto">
+            <button type="submit">매출이익</button>
+        </form>
+    </body>
+    
+</html>

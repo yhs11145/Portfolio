@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    </head>
+    <body>
+        <table class="table table-striped">
+            <thread>
+                <tr>
+                    <th>이름</th>
+                    <th>주문번호</th>
+                    <th>가격</th>
+                </tr>
+        </thread>
+        <tbody>
+        {% for row in datalist %}
+        <tr>
+            <td>{{row.name}}</td>
+            <td>{{row.numb}}</td>
+            <td>{{row.price}}</td>
+        </tr>
+        {% endfor %}
+            
+        </tbody>
+        </table>
+    </body>
+</html>

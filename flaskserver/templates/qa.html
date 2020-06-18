@@ -1,0 +1,79 @@
+<html>
+    <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://getbootstrap.com/docs/4.4/dist/css/bootsrap.min.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    </head>
+    <body>
+        <form name=myform action="/qapage" method="post" class="row text-center" style="width:100% float:none; margin:0 auto">
+            <select id="myid" name="id">
+                <option value=''>아이디선택</option>
+                <option value='dorothy385'>도로시</option>
+                <option value='yoome123'>세일파이</option>
+                <option value='banyhousemaster'>바니하우스</option>
+            </select>
+            <button type='submit' class="btn btn-outline-primary">조회하기</button>
+        </form>
+        <form name=myform2 action="/qacheck" method="post">
+            <table class="table table-striped table-em">
+                <thread>
+                    <tr>
+                        <th>주문번호</th>
+                        <th>수령자</th>
+                        <th>문의</th>
+                        <th>내용</th>
+                        <th>날짜</th>
+                        <th>확인</th>
+                    </tr>
+            </thread>
+            <tbody>
+            {% for row in datalist %}
+            <tr>
+                <td>{{row.name}}</td>
+                <td width="200">{{row.customer}}</td>
+                <td>{{row.reply}}</td>
+                <td>{{row.reply2}}</td>
+                <td width="200">{{row.datet}}</td>
+                <td>{{row.checkdata}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            <input type="text" name="cb">
+            <button type="submit" class="btn btn-outline-primary">확인완료</button>
+        </form>
+        <form name=form3 action="/qadelete" method="post">
+            <input type="text" name="dele">
+            <button type="submit" class="btn btn-outline-primary">삭제하기</button>
+        </form>
+        <p>게시글 올리기</p>
+        <form name="form2" action="/answer" method="post">
+            <textarea name="ordertitle" type="text" class="form-control" placeholder="주문번호" rows="1"></textarea>
+            <textarea name="title" type="text" class="form-control" placeholder="제목" rows="1"></textarea>
+            <textarea name="content" type="text" class="form-control" placeholder="내용" rows="10"><br><br><br></textarea>
+            <select id="myid" name="id">
+                <option value=''>아이디선택</option>
+                <option value='dorothy385'>도로시</option>
+                <option value='yoome123'>세일파이</option>
+                <option value='banyhousemaster'>바니하우스</option>
+            </select>
+            <select id="mykind" name="kind">
+                <option value=''>질문유형선택</option>
+                <option value='2'>배송 문의</option>
+                <option value='3'>반품문의</option>
+                <option value="4">취소 문의</option>
+                <option value="5">교환 문의</option>
+                <option value="6">인쇄 문의</option>
+                <option value="7">주문결제 문의</option>
+                <option value="8">회원정보 문의</option>
+                <option value="9">상품정보 문의</option>
+                <option value="10">살재고 문의</option>
+                <option value="11">대량주문 문의</option>
+                <option value="12">창업스쿨 문의</option>
+                <option value="13">최저가 위반 문의</option>
+            </select>
+            <input type="file" name="file">
+            <button type="submit" class="btn btn-outline-primary">올리기</button>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <meta charset="="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    </head>
+    <body>
+    <script type="text/javascript">
+        swal.fire({
+            title:"로그아웃",
+            text:"로그아웃에 성공하였습니다.",
+            icon:"success",
+            confirmButtonText:'확인',
+            backdrop: `
+                rgba(0,0,123,0.4)
+                url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                left top
+                no-repeat
+  `
+        }).then((result)=>{
+            if (result.value){
+                window.location.href='/'
+            }
+        });   
+    </script>
+    </body>
+</html> 

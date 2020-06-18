@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta charset="="utf-8">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='signin.css')}}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    </head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        function login(){
+            var loginForm=document.myform;
+            var userid=loginForm.id.value;
+            var userpw=loginForm.pw.value;
+            if(!userid || !userpw)
+            {
+                swal({
+                    title:"경고",
+                    text:"아이디나 비밀번호를 입력하세요",
+                    icon:"error",
+                    button:"확인"
+                });   
+            }
+            else{
+                loginForm.submit()
+            }
+        }
+    </script>
+    <body>
+        <video id="videoabc" autoplay muted loop poster="video/intro-image.jpg">
+            <source src="{{url_for('static',filename='video.mp4')}}" type='video/mp4'>
+        </video>
+        <form name=myform method="post" class="row text-center" style="width:100% float:none; margin:0 auto">
+            <div class="container">
+                <h1 style="color:black ">로그인 화면</h1>
+                <table class="table table-dark">
+                <tr>
+                    <td><label class="label label-primary">로그인</label> </td>
+                    <td><input name="id" type="text" placeholder="email" class="form-control"><br></td>
+                </tr>
+                <tr>
+                    <td><label class="label label-primary">비밀번호</label> </td>
+                    <td><input name="pw" type="password" placeholder="password" class="form-control"></td>
+                </tr>
+                </table>
+                <input type="button" onclick="login()" value="로그인" class="btn btn-outline-primary">
+            </div>
+        </form>
+        <a href="https://kauth.kakao.com/oauth/authorize?client_id=c1bc0da7c5efa08e9595f207e7b8cb08&redirect_uri=http://192.168.0.7:5000/oauth&response_type=code"><button type="submit"><img src="{{url_for('static',filename='kakaologin.png')}}"></button>
+    </body>
+</html>
