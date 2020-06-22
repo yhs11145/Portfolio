@@ -1,10 +1,10 @@
-# -*- mode: python -*-
+# -*- mode: python ; coding: utf-8 -*-
 
 block_cipher = None
 
 
 a = Analysis(['playautoorder.py'],
-             pathex=['C:\\Users\\yhs11\\OneDrive\\πÆº≠\\work\\«√∑π¿Ãø¿≈‰2.0'],
+             pathex=['C:\\Users\\User\\Documents\\yoon\\ÏÉà Ìè¥Îçî2\\playauto'],
              binaries=[('chromedriver.exe', '.')],
              datas=[],
              hiddenimports=[],
@@ -28,5 +28,6 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
+          upx_exclude=[],
           runtime_tmpdir=None,
           console=True )
