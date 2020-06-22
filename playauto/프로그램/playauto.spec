@@ -1,10 +1,10 @@
-# -*- mode: python -*-
+# -*- mode: python ; coding: utf-8 -*-
 
 block_cipher = None
 
 
 a = Analysis(['playauto.py'],
-             pathex=['C:\\Users\\yhs11\\OneDrive\\¹®¼­\\work\\ÇÃ·¹ÀÌ¿ÀÅä2.0\\ÇÁ·Î±×·¥'],
+             pathex=['C:\\Users\\User\\Documents\\yoon\\ìƒˆ í´ë”2\\playauto\\í”„ë¡œê·¸ë¨'],
              binaries=[('chromedriver.exe', '.')],
              datas=[],
              hiddenimports=[],
@@ -28,5 +28,6 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
+          upx_exclude=[],
           runtime_tmpdir=None,
           console=True )
