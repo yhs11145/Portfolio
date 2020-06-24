@@ -87,6 +87,7 @@ while(1):
                         soup=BeautifulSoup(html,'html.parser')
                         for i in soup.select('div > div.text-bold.page-number-box'):
                             print(i.text)
+                            slack_data('주문발주오류삭제'+i.text)
                         if int(i.string)>0:
                             continue
                         else:
@@ -144,7 +145,8 @@ while(1):
                         html=driver.page_source
                         soup=BeautifulSoup(html,'html.parser')
                         for i in soup.select('div > div.text-bold.page-number-box'):
-                            print(i.text) 
+                            print(i.text)
+                            slack_data('문의수집오류삭제'+i.text) 
                         if int(i.string)>0:
                             continue
                         else:
@@ -180,6 +182,7 @@ while(1):
             soup=BeautifulSoup(html,'html.parser')
             for i in soup.select('div > div.text-bold.page-number-box'):
                 print(i.text)
+                slack_data('주문수집삭제'+i.text)
             if int(i.string)>0:
                 pass
             else:
@@ -203,6 +206,7 @@ while(1):
             soup=BeautifulSoup(html,'html.parser')
             for i in soup.select('div > div.text-bold.page-number-box'):
                 print(i.text)
+                slack_data('문의작업삭제'+i.text)
             if int(i.string)>0:
                 pass
             else:

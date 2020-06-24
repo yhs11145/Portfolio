@@ -96,6 +96,8 @@ while(1):
         try:
             driver.find_element_by_xpath('//*[@id="specialListBox"]/div[3]/ul/li['+str(pagenumber)+']/a').click()
             pagenumber+=1
+            if pagenumber==15:
+                pagenumber=5
             productnumber=1
             driver.find_element_by_xpath('//*[@id="specialTab01"]/ul/li['+str(productnumber)+']/a[2]').click()
         except:
