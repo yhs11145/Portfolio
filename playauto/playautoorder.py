@@ -50,7 +50,7 @@ while(1):
             print("대문의수집오류")
             pass
         time.sleep(600)
-        while(1):##주문발주
+        while(1):##주문발주-> 오류면 주문오류로 정확하면 문의수집 확인으로
             try:
                 driver.get('https://app.playauto.io/#!/etc/work')
                 driver.refresh()
@@ -66,7 +66,7 @@ while(1):
                     slack_data('주문발주'+i.text)
                 if int(i.string)>=105:
                     break
-                else:##주문발주 오류시
+                else:##주문발주 오류시 -> 작업관리 삭제후 문의//동기화 재수집
                     while(1):
                         print("주문발주오류")
                         driver.get('https://app.playauto.io/#!/etc/work')
@@ -92,12 +92,12 @@ while(1):
                             continue
                         else:
                             pass
-                        print("주문발주오류로 재수집")
+                        print("주문발주오류로 재수집")##재수집// 동기화까지
                         driver.get('https://app.playauto.io/#!/order/shipment/integrated_list')
                         time.sleep(5)
                         driver.find_element_by_xpath('//*[@id="integrated_shipment_grid_searchbar"]/div/div[1]/div[1]/div/div/button').click()
                         time.sleep(5)
-                        driver.find_element_by_xpath('/html/body/div[1]/div/div/form/div/div[2]/label/input').click()
+                        #driver.find_element_by_xpath('/html/body/div[1]/div/div/form/div/div[2]/label/input').click()
                         driver.find_element_by_xpath('//*[@id="goAction"]').click()
                         time.sleep(5)
                         driver.find_element_by_xpath('//*[@id="integrated_shipment_grid_searchbar"]/div/div[1]/div[2]/div/div/button').click()
