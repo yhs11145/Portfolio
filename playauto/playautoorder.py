@@ -23,7 +23,7 @@ driver.find_element_by_name("email").send_keys(id)
 driver.find_element_by_name("password").send_keys(pw)
 driver.find_element_by_xpath('/html/body/div[3]/div/div/form/div/div[5]/div/button').click()
 time.sleep(5)
-while(1):
+while(1):##주문발주,동기화,문의수집-> 갯수파악후 오류면 주문오류로 정확하면 작업관리
     try:
         driver.get('https://app.playauto.io/#!/order/shipment/integrated_list')
         time.sleep(5)
@@ -31,16 +31,16 @@ while(1):
         time.sleep(5)
         try:
             #driver.find_element_by_xpath('/html/body/div[1]/div/div/form/div/div[2]/label/input').click()
+            driver.find_element_by_xpath('//*[@id="goAction"]').click()#주문수집작업
+            time.sleep(5)
+            driver.find_element_by_xpath('//*[@id="integrated_shipment_grid_searchbar"]/div/div[1]/div[2]/div/div/button').click()##문의수집작업
+            time.sleep(5)
             driver.find_element_by_xpath('//*[@id="goAction"]').click()
             time.sleep(5)
-            driver.find_element_by_xpath('//*[@id="integrated_shipment_grid_searchbar"]/div/div[1]/div[2]/div/div/button').click()
-            time.sleep(5)
-            driver.find_element_by_xpath('//*[@id="goAction"]').click()
-            time.sleep(5)
-        except:
+        except:##처음페이지 에러시 
             print("대주문수집오류")
             pass
-        driver.get('https://app.playauto.io/#!/order/customer_inquiry/list')
+        driver.get('https://app.playauto.io/#!/order/customer_inquiry/list')##다시 접속
         time.sleep(5)
         try:
             driver.find_element_by_xpath('//*[@id="customer_inquiry_grid_searchbar"]/div/div[1]/div[1]/div/div/button').click()
@@ -50,7 +50,7 @@ while(1):
             print("대문의수집오류")
             pass
         time.sleep(600)
-        while(1):##주문발주-> 오류면 주문오류로 정확하면 문의수집 확인으로
+        while(1):##주문발주 확인_작업관리 __ 오류시 작업삭제후 재수집. //작업완료시 문의 작업
             try:
                 driver.get('https://app.playauto.io/#!/etc/work')
                 driver.refresh()
@@ -63,10 +63,9 @@ while(1):
                 soup=BeautifulSoup(html,'html.parser')
                 for i in soup.select('div > div.text-bold.page-number-box'):
                     print(i.text)
-                    slack_data('주문발주'+i.text)
                 if int(i.string)>=105:
                     break
-                else:##주문발주 오류시 -> 작업관리 삭제후 문의//동기화 재수집
+                else:##주문발주 확인_작업관리 오류시 -> 작업관리 삭제후 문의//동기화 재수집
                     while(1):
                         print("주문발주오류")
                         driver.get('https://app.playauto.io/#!/etc/work')
@@ -86,13 +85,13 @@ while(1):
                         html=driver.page_source
                         soup=BeautifulSoup(html,'html.parser')
                         for i in soup.select('div > div.text-bold.page-number-box'):
-                            print(i.text)
-                            slack_data('주문발주오류삭제'+i.text)
+                            print(i.text)    
                         if int(i.string)>0:
                             continue
                         else:
                             pass
                         print("주문발주오류로 재수집")##재수집// 동기화까지
+                        slack_data('주문발주오류')
                         driver.get('https://app.playauto.io/#!/order/shipment/integrated_list')
                         time.sleep(5)
                         driver.find_element_by_xpath('//*[@id="integrated_shipment_grid_searchbar"]/div/div[1]/div[1]/div/div/button').click()
@@ -109,7 +108,7 @@ while(1):
                 print(ex)
                 driver.refresh()
                 pass
-        while(1):##문의수집
+        while(1):##문의수집 확인작업_작업관리
             try:
                 driver.get('https://app.playauto.io/#!/etc/work')
                 driver.refresh()
@@ -122,7 +121,6 @@ while(1):
                 soup=BeautifulSoup(html,'html.parser')
                 for i in soup.select('div > div.text-bold.page-number-box'):
                     print(i.text)
-                    slack_data('문의수집'+i.text)
                 if int(i.string)>=78:
                     break
                 else:
@@ -146,12 +144,12 @@ while(1):
                         soup=BeautifulSoup(html,'html.parser')
                         for i in soup.select('div > div.text-bold.page-number-box'):
                             print(i.text)
-                            slack_data('문의수집오류삭제'+i.text) 
                         if int(i.string)>0:
                             continue
                         else:
                             pass
                         print("문의수집오류로 재수집")
+                        slack_data('문의수집실패') 
                         driver.get('https://app.playauto.io/#!/order/customer_inquiry/list')
                         time.sleep(5)
                         driver.find_element_by_xpath('//*[@id="customer_inquiry_grid_searchbar"]/div/div[1]/div[1]/div/div/button').click()
@@ -163,7 +161,7 @@ while(1):
                 print(ex)
                 driver.refresh()
                 pass
-        while(1):##삭제작업시작
+        while(1):##주문수집삭제작업시작__작업관리 성공적
             driver.get('https://app.playauto.io/#!/etc/work')
             driver.refresh()
             time.sleep(10)
@@ -182,12 +180,12 @@ while(1):
             soup=BeautifulSoup(html,'html.parser')
             for i in soup.select('div > div.text-bold.page-number-box'):
                 print(i.text)
-                slack_data('주문수집삭제'+i.text)
             if int(i.string)>0:
                 pass
             else:
+                slack_data('주문수집작업성공')
                 break
-        while(1):
+        while(1):#3문의수집작업삭제 문의작업 성공적
             driver.get('https://app.playauto.io/#!/etc/work')
             driver.refresh()
             time.sleep(10)
@@ -206,10 +204,10 @@ while(1):
             soup=BeautifulSoup(html,'html.parser')
             for i in soup.select('div > div.text-bold.page-number-box'):
                 print(i.text)
-                slack_data('문의작업삭제'+i.text)
             if int(i.string)>0:
                 pass
             else:
+                slack_data('문의작업성공')
                 break
         driver.quit()
         break
