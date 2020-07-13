@@ -47,7 +47,8 @@ def join():
         for row in rows:
             if id==row[0]:##중복체크
                 return render_template('join.html',id="No")
-        if id is not None:##새로 가입
+        if len(id)>0 and len(password)>0:##새로 가입
+            print(id,password)
             conn=connection()
             curs=conn.cursor()
             sql="insert into useradmin (name,id,password) values (%s, %s,%s)"
@@ -55,6 +56,9 @@ def join():
             conn.commit()
             conn.close()
             return render_template('join.html',id='ok')
+        else:
+            return render_template('join.html',id='retry')
+        
     return render_template('join.html',id='None')##처음 접속시
 
     

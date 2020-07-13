@@ -31,9 +31,18 @@
                     }
                 });   
             }
+            else if (id=="retry"){
+                swal.fire({
+                    title:"회원가입 불가",
+                    text:"아이디나 비밀번호를 다시 입력하세요",
+                    icon:"error",
+                    confirmButtonText:"확인"
+                });  
+            }
         </script>
         <form name=myform method="post" class="row text-center" style="width:100% float:none; margin:0 auto">
             <div id="panel">
+                <img src={{url_for('static',filename='selling.png')}} width="150" height="150"></img>
                 <table align="center">
                     <tr>
                         <td><label class="label label-primary">이름</label> </td>
@@ -53,4 +62,8 @@
             </div>
         </form>
     </body>
+    <footer>
+        <p>Copyright @2020 Selling Corp. All rights reserved.</p>
+        <addrss>Contact webmaster for more information</address>
+    </footer>
 </html>
