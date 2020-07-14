@@ -38,7 +38,9 @@
  * 개인서버(flask)
     * [semantic-ui](https://semantic-ui.com/)
 
-
+## version 1.0.1
+ * 출석체크웹
+ * 싸울스포츠 품단종
 
 ### 수정 작업 (06.22)
 
