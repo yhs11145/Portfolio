@@ -14,18 +14,16 @@ def index():#메인홈페이지
         password=request.form['password']
         conn=connection()
         curs=conn.cursor()
-        sql="select id,password from useradmin where id=%s and password=%s"
-        curs.execute(sql,(id,password))
+        sql="select name,id,password from useradmin where id=%s and password=%s"##쿼리
+        curs.execute(sql,(id,password))#DB 가져오기
         rows=curs.fetchall()
         print(rows)
         conn.close()
-        for row in rows:
-            if id==row[0] and password==row[1]:
-                if 'test2'==row[0] and 'test2'==row[1]:
-                    session['name']=row[0]
-                    return redirect(url_for('admin'),code=307)
+        for row in rows:##아이디 비밀번호 비교
+            if id==row[1] and password==row[2]:
                 session['name']=row[0]
-                return redirect(url_for('user',idname=row[0]))
+                return 'hello'+ row[0]
+                #return redirect(url_for('user',idname=row[0]))
             else:
                 return render_template('fail.html')
         return render_template('fail.html')
@@ -47,7 +45,7 @@ def join():
         for row in rows:
             if id==row[0]:##중복체크
                 return render_template('join.html',id="No")
-        if len(id)>0 and len(password)>0:##새로 가입
+        if len(id)>0 and len(password)>0:##새로 가입  글자수로 제한
             print(id,password)
             conn=connection()
             curs=conn.cursor()
@@ -56,7 +54,7 @@ def join():
             conn.commit()
             conn.close()
             return render_template('join.html',id='ok')
-        else:
+        else: ##아이디/비밀번호 제한
             return render_template('join.html',id='retry')
         
     return render_template('join.html',id='None')##처음 접속시
