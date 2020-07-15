@@ -12,17 +12,30 @@ def index():#메인홈페이지
     if request.method=='POST':
         id=request.form['id']
         password=request.form['password']
-        conn=connection()
+        conn=connection()##로그인값 DB로부터 가져오기
         curs=conn.cursor()
         sql="select name,id,password from useradmin where id=%s and password=%s"##쿼리
         curs.execute(sql,(id,password))#DB 가져오기
         rows=curs.fetchall()
         print(rows)
+        ##근태관리 페이지 게시판 가져오기
+        sql="select * from checkinout where name=%s"
+        curs.execute(sql,(rows[0][0]))
+        attends=curs.fetchall()
+        data_list=[]
+        for obj in attends:##게시판 DB가져오기
+            data_dic={
+                'name' : obj[0],
+                'checkin' : obj[1],
+                'checkout' : obj[2]
+            }
+            data_list.append(data_dic)
         conn.close()
+        print(data_list)
         for row in rows:##아이디 비밀번호 비교
             if id==row[1] and password==row[2]:
                 session['name']=row[0]
-                return 'hello'+ row[0]
+                return render_template('atted.html',name=row[0],data_list=data_list)
                 #return redirect(url_for('user',idname=row[0]))
             else:
                 return render_template('fail.html')

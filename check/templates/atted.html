@@ -1,0 +1,49 @@
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <!-- 합쳐지고 최소화된 최신 CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+        <!-- 부가적인 테마 -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+        <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    </head>
+    <script type="text/javascript">
+        function join(){
+            location.href="/join"
+        }
+    </script>
+    <body>
+        <form method="post" class="form-inline">
+            <div class="form-group">
+                <label class="label label-primary">{{name}} 님 안녕하세요 </label> </td>   
+            </div>
+            <div class="form-group">
+                <input style=margin:10px; type="button" onclick="join()" value="출근하기" class="btn btn-danger">
+            </div>
+            <div class="form-group">
+                <input style=margin:10px; type="button" onclick="submit()" value="퇴근하기" class="btn btn-danger">
+            </div>
+        </form>
+        <table class="table table-striped">
+            <thread>
+                <tr>
+                    <th>이름</th>
+                    <th>출근시간</th>
+                    <th>퇴근시간</th>
+                </tr>
+            </thread>
+            <tbody>
+                {% for row in data_list %}
+                <tr>
+                    <td>{{row.name}}</td>
+                    <td>{{row.checkin}}</td>
+                    <td>{{row.checkout}}</td>
+                </tr>
+                {% endfor %}    
+            </tbody>
+        </table>
+    </body>
+</html>
