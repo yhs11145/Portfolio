@@ -36,13 +36,15 @@ while(1):
                 driver.find_element_by_xpath('//*[@id="pic"]').click()
                 html=driver.page_source
                 soup=BeautifulSoup(html,'html.parser')
-                for option in soup.select('#detail > div > div.detailView_orderInfoBox > dl > strong > strong > table > tbody > tr > td.left'):
+                for option in soup.select('#detail > div > div.detailView_orderInfoBox > dl > strong > strong > table > tbody > tr > td.left'): ##옵션명
                     ws.Cells(i,j).Value=option.text
                     j+=1
-                for count in soup.select('#detail > div > div.detailView_orderInfoBox > dl > strong > strong > table > tbody > tr > td.right'):
+                j=43
+                for count in soup.select('#detail > div > div.detailView_orderInfoBox > dl > strong > strong > table > tbody > tr > td.right'):#3당일출고가능
                     ws.Cells(i,j).Value=count.text
                     j+=1
-                for order in soup.select('#detail > div > div.detailView_orderInfoBox > dl > strong > strong > table > tbody > tr > td.add'):
+                j=63
+                for order in soup.select('#detail > div > div.detailView_orderInfoBox > dl > strong > strong > table > tbody > tr > td.add'):##익일출고가능
                     ws.Cells(i,j).Value=order.text
                     j+=1
                 i+=1
