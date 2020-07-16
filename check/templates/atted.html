@@ -9,22 +9,37 @@
 
         <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <script type="text/javascript">
-        function join(){
-            location.href="/join"
+        function checkin(){
+            location.href="/checkin"
         }
     </script>
     <body>
+    <script type="text/javascript">
+        var status='{{status_result}}';
+        if (status=="fail"){
+            swal.fire({
+                    title:"출근기록 실패",
+                    text:"출근기록을 하지 못했습니다. 다시 시도하세요.",
+                    icon:"error",
+                    confirmButtonText:"확인"
+                });  
+        }    
+    </script>
         <form method="post" class="form-inline">
             <div class="form-group">
                 <label class="label label-primary">{{name}} 님 안녕하세요 </label> </td>   
             </div>
             <div class="form-group">
-                <input style=margin:10px; type="button" onclick="join()" value="출근하기" class="btn btn-danger">
+                <input style=margin:10px; type="button" onclick="checkin()" value="출근하기" class="btn btn-danger">
             </div>
             <div class="form-group">
                 <input style=margin:10px; type="button" onclick="submit()" value="퇴근하기" class="btn btn-danger">
+            </div>
+            <div class="form-group">
+                <input type="text" name="explain" placeholder="할일을 적으세요" class="form-control">
             </div>
         </form>
         <table class="table table-striped">

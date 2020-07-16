@@ -72,6 +72,14 @@ def join():
         
     return render_template('join.html',id='None')##처음 접속시
 
+@app.route('/checkin',methods=['POST','GET'])  ##근태관리
+def checkin():
+    if request.method=="POST":
+        #name=request.form['name']
+        explain=request.form['explain']
+        return print(explain)
+    else:
+        return render_template('atted.html',status_result='fail')
     
 if __name__=="__main__":
     app.secret_key='super secret key'
