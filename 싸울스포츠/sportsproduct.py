@@ -64,4 +64,3 @@ while(1):
         break
     
 driver.close()
-sys.exit(0)

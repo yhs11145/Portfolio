@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>722</width>
-    <height>600</height>
+    <width>597</width>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>60</y>
+      <x>10</x>
+      <y>10</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -27,21 +27,11 @@
      <string>파일 위치 :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>60</y>
-      <width>421</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>60</y>
+      <x>500</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -50,13 +40,23 @@
      <string>실행</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QTextBrowser" name="textBrowser">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>120</y>
-      <width>621</width>
-      <height>431</height>
+      <x>10</x>
+      <y>90</y>
+      <width>571</width>
+      <height>371</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>571</width>
+      <height>31</height>
      </rect>
     </property>
    </widget>

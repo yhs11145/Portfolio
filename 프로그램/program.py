@@ -13,22 +13,22 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(722, 600)
+        MainWindow.resize(597, 487)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(50, 60, 81, 16))
+        self.label.setGeometry(QtCore.QRect(10, 10, 81, 16))
         self.label.setObjectName("label")
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(140, 60, 421, 20))
-        self.lineEdit.setObjectName("lineEdit")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(610, 60, 75, 23))
+        self.pushButton.setGeometry(QtCore.QRect(500, 10, 75, 23))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.push)
-        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.plainTextEdit.setGeometry(QtCore.QRect(60, 120, 621, 431))
-        self.plainTextEdit.setObjectName("plainTextEdit")
+        self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser.setGeometry(QtCore.QRect(10, 90, 571, 371))
+        self.textBrowser.setObjectName("textBrowser")
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit.setGeometry(QtCore.QRect(10, 40, 571, 31))
+        self.textEdit.setObjectName("textEdit")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -44,13 +44,13 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "실행"))
         
     def push(self):
-        file=self.lineEdit.text()
-        
-        self.plainTextEdit.appendPlainText("실행파일 : "+file)
-        self.plainTextEdit.appendPlainText(" 현재시간 :"+str(datetime.datetime.now()))
+        file=self.textEdit.toPlainText()
+        file=file.replace("file:///","")
+        self.textBrowser.append("실행파일 : "+file)
+        self.textBrowser.append("현재시간 :"+str(datetime.datetime.now()))
         p=subprocess.Popen([file])
         p.wait()
-        self.plainTextEdit.appendPlainText("종료시간 : "+str(datetime.datetime.now()))
+        self.textBrowser.append("종료시간 : "+str(datetime.datetime.now()))
         
         
         
