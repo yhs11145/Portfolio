@@ -28,7 +28,8 @@ def index():#메인홈페이지
             data_dic={
                 'name' : obj[0],
                 'checkin' : obj[1],
-                'checkout' : obj[2]
+                'checkout' : obj[2],
+                'check_explain' : obj[3]
             }
             data_list.append(data_dic)
         conn.close()
@@ -78,6 +79,7 @@ def checkin():
     if request.method=="POST":
         name=session['name']
         check_explain=request.form['explain']
+        print(name,check_explain)
         conn=connection() ##출근도장 찍기
         curs=conn.cursor()
         sql="insert into checkinout (name,checkin,check_explain) values (%s,%s,%s)"
@@ -86,10 +88,49 @@ def checkin():
         conn.close()
         conn=connection()
         curs=conn.cursor()
-        sql="select * from checkinout where id=%s"
-        return render_template('atted.html',status_result='success')
+        sql="select * from checkinout where name=%s"
+        curs.execute(sql,(name))
+        attends=curs.fetchall()
+        data_list=[]
+        for obj in attends:##게시판 DB가져오기
+            data_dic={
+                'name' : obj[0],
+                'checkin' : obj[1],
+                'checkout' : obj[2],
+                'check_explain' : obj[3]
+            }
+            data_list.append(data_dic)
+        conn.close()
+        return render_template('atted.html',status_result='success',name=name,data_list=data_list)
     else:
         return render_template('atted.html',status_result='fail')
+    
+@app.route('/checkout',methods=['POST','GET'])
+def checkout():
+    if request.method=="POST":
+        name=session['name']
+        conn=connection()
+        curs=conn.cursor()
+        sql="update checkinout set checkout=%s where name=%s"
+        curs.execute(sql,(datetime.datetime.now(),name))
+        conn.commit()
+        conn.close()
+        conn=connection()
+        curs=conn.cursor()
+        sql="select * from checkinout where name=%s"
+        curs.execute(sql,(name))
+        attends=curs.fetchall()
+        data_list=[]
+        for obj in attends:##게시판 DB가져오기
+            data_dic={
+                'name' : obj[0],
+                'checkin' : obj[1],
+                'checkout' : obj[2],
+                'check_explain' : obj[3]
+            }
+            data_list.append(data_dic)
+        conn.close()
+        return render_template('atted.html',name=name,data_list=data_list)
     
 if __name__=="__main__":
     app.secret_key='super secret key'

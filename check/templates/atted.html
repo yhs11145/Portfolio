@@ -11,11 +11,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
-    <script type="text/javascript">
-        function checkin(){
-            location.href="/checkin"
-        }
-    </script>
     <body>
     <script type="text/javascript">
         var status='{{status_result}}';
@@ -44,11 +39,14 @@
                 <input style=margin:10px; type="button" onclick="submit()" value="출근하기" class="btn btn-danger">
             </div>
             <div class="form-group">
-                <input style=margin:10px; type="button" onclick="submit()" value="퇴근하기" class="btn btn-danger">
-            </div>
-            <div class="form-group">
                 <input type="text" name="explain" placeholder="할일을 적으세요" class="form-control">
             </div>
+        </form>
+        <form name="myform" action="/checkout" method="post" class="form-inline">
+            <div class="form-group">
+                <input style=margin:10px; type="button" onclick="submit()" value="퇴근하기" class="btn btn-danger">
+            </div>
+        </form>  
         </form>
         <table class="table table-striped">
             <thread>
@@ -56,6 +54,7 @@
                     <th>이름</th>
                     <th>출근시간</th>
                     <th>퇴근시간</th>
+                    <th>업무내용</th>
                 </tr>
             </thread>
             <tbody>
@@ -64,7 +63,7 @@
                     <td>{{row.name}}</td>
                     <td>{{row.checkin}}</td>
                     <td>{{row.checkout}}</td>
-                    <td>{{row.checkout-row.checkin}}
+                    <td>{{row.check_explain}}
                 </tr>
                 {% endfor %}    
             </tbody>
