@@ -2,6 +2,7 @@ from flask import Flask,render_template,request,flash,request,url_for,redirect,s
 import pymysql
 import sys,os,time
 import json
+import datetime
 app=Flask(__name__)
 
 def connection():
@@ -75,9 +76,18 @@ def join():
 @app.route('/checkin',methods=['POST','GET'])  ##근태관리
 def checkin():
     if request.method=="POST":
-        #name=request.form['name']
-        explain=request.form['explain']
-        return print(explain)
+        name=session['name']
+        check_explain=request.form['explain']
+        conn=connection() ##출근도장 찍기
+        curs=conn.cursor()
+        sql="insert into checkinout (name,checkin,check_explain) values (%s,%s,%s)"
+        curs.execute(sql,(name,datetime.datetime.now(),check_explain))
+        conn.commit()
+        conn.close()
+        conn=connection()
+        curs=conn.cursor()
+        sql="select * from checkinout where id=%s"
+        return render_template('atted.html',status_result='success')
     else:
         return render_template('atted.html',status_result='fail')
     
