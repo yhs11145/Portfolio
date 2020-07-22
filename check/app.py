@@ -75,21 +75,36 @@ def join():
         
     return render_template('join.html',id='None')##처음 접속시
 
-@app.route('/checkin',methods=['POST','GET'])  ##근태관리
-def checkin(): ##출근페이지
+@app.route('/check',methods=['POST','GET'])  ##근태관리
+def check(): ##출근페이지
     if request.method=="POST":
         name=session['name']
-        check_explain=request.form['explain']
-        try:
-            conn=connection() ##출근도장 찍기
-            curs=conn.cursor()
-            sql="insert into checkinout (date,name,checkin,check_explain) values (%s,%s,%s,%s)"
-            curs.execute(sql,(time.strftime('%y-%m-%d',time.localtime(time.time())),name,datetime.datetime.now(),check_explain))
-            conn.commit()
-            conn.close()
-            conn=connection()
-            curs=conn.cursor()
-        except: ##출근확인 오류
+        if request.form['checkin']=='출근하기': ##출근도장 찍을때  
+            check_explain=request.form['explain']
+            try:
+                conn=connection() ##출근도장 찍기
+                curs=conn.cursor()
+                sql="insert into checkinout (date,name,checkin,check_explain) values (%s,%s,%s,%s)"
+                curs.execute(sql,(time.strftime('%y-%m-%d',time.localtime(time.time())),name,datetime.datetime.now(),check_explain))
+                conn.commit()
+                conn.close()
+                conn=connection()
+                curs=conn.cursor()
+            except: ##출근확인 오류
+                sql="select * from checkinout where name=%s"
+                curs.execute(sql,(name))
+                attends=curs.fetchall()
+                data_list=[]
+                for obj in attends:##DB출력
+                    data_dic={
+                        'date' : obj[0],
+                        'name' : obj[1],
+                        'checkin' : obj[2],
+                        'checkout' : obj[3],
+                        'check_explain' : obj[4]
+                    }
+                    data_list.append(data_dic)
+                return render_template('atted.html',name=name,status_result='fail',data_list=data_list)
             sql="select * from checkinout where name=%s"
             curs.execute(sql,(name))
             attends=curs.fetchall()
@@ -103,52 +118,34 @@ def checkin(): ##출근페이지
                     'check_explain' : obj[4]
                 }
                 data_list.append(data_dic)
-            return render_template('atted.html',name=name,status_result='fail',data_list=data_list)
-        sql="select * from checkinout where name=%s"
-        curs.execute(sql,(name))
-        attends=curs.fetchall()
-        data_list=[]
-        for obj in attends:##DB출력
-            data_dic={
-                'date' : obj[0],
-                'name' : obj[1],
-                'checkin' : obj[2],
-                'checkout' : obj[3],
-                'check_explain' : obj[4]
-            }
-            data_list.append(data_dic)
-        conn.close()
-        return render_template('atted.html',status_result='success',name=name,data_list=data_list)
+            conn.close()
+            return render_template('atted.html',status_result='success',name=name,data_list=data_list)
+        elif request.form['checkin']=='퇴근하기':
+            conn=connection()
+            curs=conn.cursor()
+            sql="update checkinout set checkout=%s where name=%s and date=%s"##퇴근시간 찍기
+            curs.execute(sql,(datetime.datetime.now(),name,time.strftime('%y-%m-%d',time.localtime(time.time()))))
+            conn.commit()
+            conn.close()
+            conn=connection()
+            curs=conn.cursor()
+            sql="select * from checkinout where name=%s"##DB출력
+            curs.execute(sql,(name))
+            attends=curs.fetchall()
+            data_list=[]
+            for obj in attends:##게시판 DB가져오기
+                data_dic={
+                    'date' : obj[0],
+                    'name' : obj[1],
+                    'checkin' : obj[2],
+                    'checkout' : obj[3],
+                    'check_explain' : obj[4]
+                }
+                data_list.append(data_dic)
+            conn.close()
+            return render_template('atted.html',name=name,data_list=data_list)
     else:
         return render_template('atted.html',name=name,status_result='fail')
-    
-@app.route('/checkout',methods=['POST','GET'])
-def checkout(): ##퇴근페이지
-    if request.method=="POST":
-        name=session['name']
-        conn=connection()
-        curs=conn.cursor()
-        sql="update checkinout set checkout=%s where name=%s and date=%s"##퇴근시간 찍기
-        curs.execute(sql,(datetime.datetime.now(),name,time.strftime('%y-%m-%d',time.localtime(time.time()))))
-        conn.commit()
-        conn.close()
-        conn=connection()
-        curs=conn.cursor()
-        sql="select * from checkinout where name=%s"##DB출력
-        curs.execute(sql,(name))
-        attends=curs.fetchall()
-        data_list=[]
-        for obj in attends:##게시판 DB가져오기
-            data_dic={
-                'date' : obj[0],
-                'name' : obj[1],
-                'checkin' : obj[2],
-                'checkout' : obj[3],
-                'check_explain' : obj[4]
-            }
-            data_list.append(data_dic)
-        conn.close()
-        return render_template('atted.html',name=name,data_list=data_list)
     
 @app.route('/admin',methods=['POST','GET']) ##관리자페이지 접속 및 관리
 def admin():
@@ -187,6 +184,61 @@ def admin():
         return render_template('fail.html')
     
     return render_template('adminlogin.html',id='None')##처음 접속시
+
+@app.route('/admincontrol',methods=['GET','POST'])
+def admincontrol():
+    if request.method=="POST":##관리자가 초기화할 대상 선정.
+        name=session['name']
+        date=request.form['date']
+        dataname=request.form['name']
+        if request.form['submit']=='출근시간 초기화':
+            conn=connection()
+            curs=conn.cursor()
+            sql="update checkinout set checkin=NULL where name=%s and date=%s"
+            curs.execute(sql,(dataname,date))
+            conn.commit()
+            conn.close()
+            conn=connection()
+            curs=conn.cursor()
+            sql="select * from checkinout"
+            curs.execute(sql)
+            check=curs.fetchall()
+            data_list=[]
+            for obj in check:##게시판 DB가져오기
+                data_dic={
+                    'date' : obj[0],
+                    'name' : obj[1],
+                    'checkin' : obj[2],
+                    'checkout' : obj[3],
+                    'check_explain' : obj[4]
+                }
+                data_list.append(data_dic)
+            conn.close()
+            return render_template('admin.html',name=name,data_list=data_list)
+        elif request.form['submit']=='퇴근시간 초기화':
+            conn=connection()
+            curs=conn.cursor()
+            sql="update checkinout set checkout=NULL where name='%s' and date='%s'"
+            curs.execute(sql,(name,date))
+            conn.commit()
+            conn.close()
+            conn=connection()
+            curs=conn.cursor()
+            sql="select * from checkinout"
+            curs.execute(sql)
+            check=curs.fetchall()
+            data_list=[]
+            for obj in check:##게시판 DB가져오기
+                data_dic={
+                    'date' : obj[0],
+                    'name' : obj[1],
+                    'checkin' : obj[2],
+                    'checkout' : obj[3],
+                    'check_explain' : obj[4]
+                }
+                data_list.append(data_dic)
+            conn.close()
+            return render_template('admin.html',name=name,data_list=data_list)
     
 if __name__=="__main__":
     app.secret_key='super secret key'

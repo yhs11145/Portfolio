@@ -12,7 +12,13 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <body>
-    </script>
+        <form name=selection method="post" action="/admincontrol" class="form-inline" style="width:100% float:none; margin:0 auto">
+            <div class="form-group">
+                <input style=margin:10px; type="text" name="date" placeholder="해당날짜" class="form-control">
+                <input style=margin:10px; type="text" name="name" placeholder="이름" class="form-control">
+                <input type="submit" style=margin:10px;  name="submit" value="출근시간 초기화" class="btn btn-danger">
+                <input type="submit" style=margin:10px;  name="submit" value="퇴근시간 초기화" class="btn btn-danger">
+            </div>
         </form>
         <table class="table table-striped">
             <thread>

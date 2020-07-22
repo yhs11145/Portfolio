@@ -31,16 +31,14 @@
                 });  
         }    
     </script>
-        <div class="form-group">
-            <form name="myform" action="/checkin" method="post" class="form-inline">
-                <label  class="label label-primary">{{name}} 님 안녕하세요 </label> </td>   
-                <input style=margin:10px; type="button" onclick="submit()" value="출근하기" class="btn btn-danger">
-                <input type="text" name="explain" placeholder="할일을 적으세요" class="form-control">
-            </form>
-            <form name="myform" action="/checkout" method="post" class="form-inline"> 
-                <input style=margin:10px; type="button" onclick="submit()" value="퇴근하기" class="btn btn-danger">
-            </form>
-        </div>  
+        <form name="myform" action="/check" method="post" class="form-inline">
+            <div class="form-group">
+                <label  class="label label-primary">{{name}} 님 안녕하세요 </label> </td>
+                <input type="text" name="explain" placeholder="할일을 적으세요" class="form-control">   
+                <input type="submit" style=margin:10px; name="checkin"  value="출근하기" class="btn btn-danger">
+                <input type="submit" style=margin:10px; name="checkin" value="퇴근하기" class="btn btn-danger">
+            </div>
+        </form> 
         </form>
         <table class="table table-striped">
             <thread>
