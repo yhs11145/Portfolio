@@ -80,7 +80,6 @@ def checkin(): ##출근페이지
     if request.method=="POST":
         name=session['name']
         check_explain=request.form['explain']
-        print(name,check_explain)
         try:
             conn=connection() ##출근도장 찍기
             curs=conn.cursor()
@@ -104,7 +103,7 @@ def checkin(): ##출근페이지
                     'check_explain' : obj[4]
                 }
                 data_list.append(data_dic)
-            return render_template('atted.html',status_result='fail',data_list=data_list)
+            return render_template('atted.html',name=name,status_result='fail',data_list=data_list)
         sql="select * from checkinout where name=%s"
         curs.execute(sql,(name))
         attends=curs.fetchall()
@@ -121,7 +120,7 @@ def checkin(): ##출근페이지
         conn.close()
         return render_template('atted.html',status_result='success',name=name,data_list=data_list)
     else:
-        return render_template('atted.html',status_result='fail')
+        return render_template('atted.html',name=name,status_result='fail')
     
 @app.route('/checkout',methods=['POST','GET'])
 def checkout(): ##퇴근페이지
@@ -150,6 +149,44 @@ def checkout(): ##퇴근페이지
             data_list.append(data_dic)
         conn.close()
         return render_template('atted.html',name=name,data_list=data_list)
+    
+@app.route('/admin',methods=['POST','GET']) ##관리자페이지 접속 및 관리
+def admin():
+    if request.method=="POST":##관리자페이지 로그인
+        id=request.form['id']
+        password=request.form['password']
+        conn=connection()##로그인값 DB로부터 가져오기
+        curs=conn.cursor()
+        sql="select id,pw from admin where id=%s and pw=%s"##쿼리
+        curs.execute(sql,(id,password))#DB 가져오기
+        rows=curs.fetchall()
+        print(rows)
+        conn=connection()
+        curs=conn.cursor()
+        sql="select * from checkinout"
+        curs.execute(sql)
+        check=curs.fetchall()
+        data_list=[]
+        for obj in check:##게시판 DB가져오기
+            data_dic={
+                'date' : obj[0],
+                'name' : obj[1],
+                'checkin' : obj[2],
+                'checkout' : obj[3],
+                'check_explain' : obj[4]
+            }
+            data_list.append(data_dic)
+        conn.close()
+        for row in rows:##아이디 비밀번호 비교
+            if id==row[0] and password==row[1]:
+                session['name']=row[0]
+                return render_template('admin.html',name=row[0],data_list=data_list)
+                #return redirect(url_for('user',idname=row[0]))
+            else:
+                return render_template('fail.html')
+        return render_template('fail.html')
+    
+    return render_template('adminlogin.html',id='None')##처음 접속시
     
 if __name__=="__main__":
     app.secret_key='super secret key'
