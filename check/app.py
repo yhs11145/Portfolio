@@ -75,7 +75,7 @@ def join():
     return render_template('join.html',id='None')##처음 접속시
 
 @app.route('/checkin',methods=['POST','GET'])  ##근태관리
-def checkin():
+def checkin(): ##출근페이지
     if request.method=="POST":
         name=session['name']
         check_explain=request.form['explain']
@@ -92,7 +92,7 @@ def checkin():
         curs.execute(sql,(name))
         attends=curs.fetchall()
         data_list=[]
-        for obj in attends:##게시판 DB가져오기
+        for obj in attends:##DB출력
             data_dic={
                 'name' : obj[0],
                 'checkin' : obj[1],
@@ -106,18 +106,18 @@ def checkin():
         return render_template('atted.html',status_result='fail')
     
 @app.route('/checkout',methods=['POST','GET'])
-def checkout():
+def checkout(): ##퇴근페이지
     if request.method=="POST":
         name=session['name']
         conn=connection()
         curs=conn.cursor()
-        sql="update checkinout set checkout=%s where name=%s"
+        sql="update checkinout set checkout=%s where name=%s"##퇴근시간 찍기
         curs.execute(sql,(datetime.datetime.now(),name))
         conn.commit()
         conn.close()
         conn=connection()
         curs=conn.cursor()
-        sql="select * from checkinout where name=%s"
+        sql="select * from checkinout where name=%s"##DB출력
         curs.execute(sql,(name))
         attends=curs.fetchall()
         data_list=[]
