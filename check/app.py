@@ -26,10 +26,11 @@ def index():#메인홈페이지
         data_list=[]
         for obj in attends:##게시판 DB가져오기
             data_dic={
-                'name' : obj[0],
-                'checkin' : obj[1],
-                'checkout' : obj[2],
-                'check_explain' : obj[3]
+                'date' : obj[0],
+                'name' : obj[1],
+                'checkin' : obj[2],
+                'checkout' : obj[3],
+                'check_explain' : obj[4]
             }
             data_list.append(data_dic)
         conn.close()
@@ -80,24 +81,41 @@ def checkin(): ##출근페이지
         name=session['name']
         check_explain=request.form['explain']
         print(name,check_explain)
-        conn=connection() ##출근도장 찍기
-        curs=conn.cursor()
-        sql="insert into checkinout (name,checkin,check_explain) values (%s,%s,%s)"
-        curs.execute(sql,(name,datetime.datetime.now(),check_explain))
-        conn.commit()
-        conn.close()
-        conn=connection()
-        curs=conn.cursor()
+        try:
+            conn=connection() ##출근도장 찍기
+            curs=conn.cursor()
+            sql="insert into checkinout (date,name,checkin,check_explain) values (%s,%s,%s,%s)"
+            curs.execute(sql,(time.strftime('%y-%m-%d',time.localtime(time.time())),name,datetime.datetime.now(),check_explain))
+            conn.commit()
+            conn.close()
+            conn=connection()
+            curs=conn.cursor()
+        except: ##출근확인 오류
+            sql="select * from checkinout where name=%s"
+            curs.execute(sql,(name))
+            attends=curs.fetchall()
+            data_list=[]
+            for obj in attends:##DB출력
+                data_dic={
+                    'date' : obj[0],
+                    'name' : obj[1],
+                    'checkin' : obj[2],
+                    'checkout' : obj[3],
+                    'check_explain' : obj[4]
+                }
+                data_list.append(data_dic)
+            return render_template('atted.html',status_result='fail',data_list=data_list)
         sql="select * from checkinout where name=%s"
         curs.execute(sql,(name))
         attends=curs.fetchall()
         data_list=[]
         for obj in attends:##DB출력
             data_dic={
-                'name' : obj[0],
-                'checkin' : obj[1],
-                'checkout' : obj[2],
-                'check_explain' : obj[3]
+                'date' : obj[0],
+                'name' : obj[1],
+                'checkin' : obj[2],
+                'checkout' : obj[3],
+                'check_explain' : obj[4]
             }
             data_list.append(data_dic)
         conn.close()
@@ -111,8 +129,8 @@ def checkout(): ##퇴근페이지
         name=session['name']
         conn=connection()
         curs=conn.cursor()
-        sql="update checkinout set checkout=%s where name=%s"##퇴근시간 찍기
-        curs.execute(sql,(datetime.datetime.now(),name))
+        sql="update checkinout set checkout=%s where name=%s and date=%s"##퇴근시간 찍기
+        curs.execute(sql,(datetime.datetime.now(),name,time.strftime('%y-%m-%d',time.localtime(time.time()))))
         conn.commit()
         conn.close()
         conn=connection()
@@ -123,10 +141,11 @@ def checkout(): ##퇴근페이지
         data_list=[]
         for obj in attends:##게시판 DB가져오기
             data_dic={
-                'name' : obj[0],
-                'checkin' : obj[1],
-                'checkout' : obj[2],
-                'check_explain' : obj[3]
+                'date' : obj[0],
+                'name' : obj[1],
+                'checkin' : obj[2],
+                'checkout' : obj[3],
+                'check_explain' : obj[4]
             }
             data_list.append(data_dic)
         conn.close()

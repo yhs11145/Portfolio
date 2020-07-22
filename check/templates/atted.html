@@ -17,7 +17,7 @@
         if (status=="fail"){
             swal.fire({
                     title:"출근기록 실패",
-                    text:"출근기록을 하지 못했습니다. 다시 시도하세요.",
+                    text:"출근기록을 하지 못했습니다. 다시 시도하세요. 관리자에게 문의하세요",
                     icon:"error",
                     confirmButtonText:"확인"
                 });  
@@ -31,26 +31,21 @@
                 });  
         }    
     </script>
-        <form name="myform" action="/checkin" method="post" class="form-inline">
-            <div class="form-group">
+        <div class="form-group">
+            <form name="myform" action="/checkin" method="post" class="form-inline">
                 <label  class="label label-primary">{{name}} 님 안녕하세요 </label> </td>   
-            </div>
-            <div class="form-group">
                 <input style=margin:10px; type="button" onclick="submit()" value="출근하기" class="btn btn-danger">
-            </div>
-            <div class="form-group">
                 <input type="text" name="explain" placeholder="할일을 적으세요" class="form-control">
-            </div>
-        </form>
-        <form name="myform" action="/checkout" method="post" class="form-inline">
-            <div class="form-group">
+            </form>
+            <form name="myform" action="/checkout" method="post" class="form-inline"> 
                 <input style=margin:10px; type="button" onclick="submit()" value="퇴근하기" class="btn btn-danger">
-            </div>
-        </form>  
+            </form>
+        </div>  
         </form>
         <table class="table table-striped">
             <thread>
                 <tr>
+                    <th>날짜</th>
                     <th>이름</th>
                     <th>출근시간</th>
                     <th>퇴근시간</th>
@@ -60,6 +55,7 @@
             <tbody>
                 {% for row in data_list %}
                 <tr>
+                    <td>{{row.date}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.checkin}}</td>
                     <td>{{row.checkout}}</td>
