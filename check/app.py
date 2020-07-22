@@ -218,8 +218,8 @@ def admincontrol():
         elif request.form['submit']=='퇴근시간 초기화':
             conn=connection()
             curs=conn.cursor()
-            sql="update checkinout set checkout=NULL where name='%s' and date='%s'"
-            curs.execute(sql,(name,date))
+            sql="update checkinout set checkout=NULL where name=%s and date=%s"
+            curs.execute(sql,(dataname,date))
             conn.commit()
             conn.close()
             conn=connection()
@@ -241,6 +241,8 @@ def admincontrol():
             return render_template('admin.html',name=name,data_list=data_list)
     
 if __name__=="__main__":
+    from waitress import serve
     app.secret_key='super secret key'
     app.config['SESSION-TYPE']='filesystem'
-    app.run(host="0.0.0.0", port="5200")
+    #app.run(host="0.0.0.0", port="5200")
+    serve(app, host="0.0.0.0", port=5200)
