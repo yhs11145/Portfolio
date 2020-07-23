@@ -7,14 +7,30 @@ from slacker import Slacker
 
 app=Flask(__name__)
 
+##함수선언
 def slack_data(ordermessage):
     token="xoxb-1017448255248-1176108620737-4kNkImbnfhiKOBKWLQNtZGG6"
     slack=Slacker(token)
     slack.chat.post_message('#pythonmessage',ordermessage)
     
+def DB_connection(attr):
+    data_list=[]
+    for obj in attr:##DB출력
+        data_dic={
+            'date' : obj[0],
+            'name' : obj[1],
+            'checkin' : obj[2],
+            'checkout' : obj[3],
+            'worktime' : obj[4],
+            'check_explain' : obj[5]
+        }
+        data_list.append(data_dic)
+    return data_list
+    
 def connection():
     return pymysql.connect(host='localhost',port=3306,user='selling',passwd='122919',db='sys',charset='utf8')
 
+##페이지 경로
 @app.route('/',methods=['POST', 'GET'])
 def index():#메인홈페이지
     if request.method=='POST':
@@ -30,16 +46,7 @@ def index():#메인홈페이지
         sql="select * from checkinout where name=%s"
         curs.execute(sql,(rows[0][0]))
         attends=curs.fetchall()
-        data_list=[]
-        for obj in attends:##게시판 DB가져오기
-            data_dic={
-                'date' : obj[0],
-                'name' : obj[1],
-                'checkin' : obj[2],
-                'checkout' : obj[3],
-                'check_explain' : obj[4]
-            }
-            data_list.append(data_dic)
+        data_list=DB_connection(attends)
         conn.close()
         print(data_list)
         for row in rows:##아이디 비밀번호 비교
@@ -98,59 +105,46 @@ def check(): ##출근페이지
                 conn.close()
                 conn=connection()
                 curs=conn.cursor()
-            except: ##출근확인 오류
+            except: ##출근확인 오류 ( 경고문 띄어주고 다시 리스트 출력)
                 sql="select * from checkinout where name=%s"
                 curs.execute(sql,(name))
                 attends=curs.fetchall()
-                data_list=[]
-                for obj in attends:##DB출력
-                    data_dic={
-                        'date' : obj[0],
-                        'name' : obj[1],
-                        'checkin' : obj[2],
-                        'checkout' : obj[3],
-                        'check_explain' : obj[4]
-                    }
-                    data_list.append(data_dic)
+                data_list=DB_connection(attends)
                 return render_template('atted.html',name=name,status_result='fail',data_list=data_list)
             sql="select * from checkinout where name=%s"
             curs.execute(sql,(name))
             attends=curs.fetchall()
-            data_list=[]
-            for obj in attends:##DB출력
-                data_dic={
-                    'date' : obj[0],
-                    'name' : obj[1],
-                    'checkin' : obj[2],
-                    'checkout' : obj[3],
-                    'check_explain' : obj[4]
-                }
-                data_list.append(data_dic)
+            data_list=DB_connection(attends)
             conn.close()
             return render_template('atted.html',status_result='success',name=name,data_list=data_list)
         elif request.form['checkin']=='퇴근하기':
             conn=connection()
             curs=conn.cursor()
             sql="update checkinout set checkout=%s where name=%s and date=%s"##퇴근시간 찍기
-            curs.execute(sql,(datetime.datetime.now().strftime('%H:%M:S'),name,time.strftime('%Y-%m-%d',time.localtime(time.time()))))
+            curs.execute(sql,(datetime.datetime.now().strftime('%H:%M:%S'),name,time.strftime('%Y-%m-%d',time.localtime(time.time()))))
             conn.commit()
             conn.close()
+            conn=connection()##업무시간 계산하기
+            curs=conn.cursor()
+            sql='select checkin,checkout from checkinout where name=%s and date=%s'##출근시간 퇴근시간 가져오기
+            curs.execute(sql,(name,time.strftime('%Y-%m-%d',time.localtime(time.time()))))
+            rows=curs.fetchall()
+            conn.close()
+            for row in rows:##퇴근시간-출근시간
+                worktime=row[1]-row[0]
             conn=connection()
-            slack_data(name+'출근완료')
+            curs=conn.cursor()
+            sql='update checkinout set worktime=%s where name=%s and date=%s'##업무시간 업데이트
+            curs.execute(sql,(worktime,name,time.strftime('%Y-%m-%d',time.localtime(time.time()))))
+            conn.commit()
+            conn.close()
+            slack_data(name+'퇴근완료')##슬랙연동
+            conn=connection()
             curs=conn.cursor()
             sql="select * from checkinout where name=%s"##DB출력
             curs.execute(sql,(name))
             attends=curs.fetchall()
-            data_list=[]
-            for obj in attends:##게시판 DB가져오기
-                data_dic={
-                    'date' : obj[0],
-                    'name' : obj[1],
-                    'checkin' : obj[2],
-                    'checkout' : obj[3],
-                    'check_explain' : obj[4]
-                }
-                data_list.append(data_dic)
+            data_list=DB_connection(attends)
             conn.close()
             return render_template('atted.html',name=name,data_list=data_list)
     else:
@@ -172,16 +166,7 @@ def admin():
         sql="select * from checkinout"
         curs.execute(sql)
         check=curs.fetchall()
-        data_list=[]
-        for obj in check:##게시판 DB가져오기
-            data_dic={
-                'date' : obj[0],
-                'name' : obj[1],
-                'checkin' : obj[2],
-                'checkout' : obj[3],
-                'check_explain' : obj[4]
-            }
-            data_list.append(data_dic)
+        data_list=DB_connection(check)
         conn.close()
         for row in rows:##아이디 비밀번호 비교
             if id==row[0] and password==row[1]:
@@ -200,7 +185,7 @@ def admincontrol():
         name=session['name']
         date=request.form['date']
         dataname=request.form['name']
-        if request.form['submit']=='기록삭제':
+        if request.form['submit']=='기록삭제':##해당 사용자 행 삭제
             conn=connection()
             curs=conn.cursor()
             sql="delete from checkinout where name=%s and date=%s"
@@ -212,23 +197,14 @@ def admincontrol():
             sql="select * from checkinout"
             curs.execute(sql)
             check=curs.fetchall()
-            data_list=[]
-            for obj in check:##게시판 DB가져오기
-                data_dic={
-                    'date' : obj[0],
-                    'name' : obj[1],
-                    'checkin' : obj[2],
-                    'checkout' : obj[3],
-                    'check_explain' : obj[4]
-                }
-                data_list.append(data_dic)
+            data_list=DB_connection(check)
             conn.close()
             return render_template('admin.html',name=name,data_list=data_list)
-        elif request.form['submit']=='출근시간 수정':
-            checkin=request.form['checkin']
+        elif request.form['submit']=='출근시간 수정': ##출근시간 수정
+            checkin=request.form['checkin'] ##수정할 시간 가져오기
             conn=connection()
             curs=conn.cursor()
-            sql="update checkinout set checkin=%s where name=%s and date=%s"
+            sql="update checkinout set checkin=%s where name=%s and date=%s" ##업데이트
             curs.execute(sql,(checkin,dataname,date))
             conn.commit()
             conn.close()
@@ -237,19 +213,10 @@ def admincontrol():
             sql="select * from checkinout"
             curs.execute(sql)
             check=curs.fetchall()
-            data_list=[]
-            for obj in check:##게시판 DB가져오기
-                data_dic={
-                    'date' : obj[0],
-                    'name' : obj[1],
-                    'checkin' : obj[2],
-                    'checkout' : obj[3],
-                    'check_explain' : obj[4]
-                }
-                data_list.append(data_dic)
+            data_list=DB_connection(check)
             conn.close()
             return render_template('admin.html',name=name,data_list=data_list)
-        elif request.form['submit']=='퇴근시간 초기화':
+        elif request.form['submit']=='퇴근시간 초기화': ##퇴근시간 초기화 (인정안할경우
             conn=connection()
             curs=conn.cursor()
             sql="update checkinout set checkout=NULL where name=%s and date=%s"
@@ -261,19 +228,11 @@ def admincontrol():
             sql="select * from checkinout"
             curs.execute(sql)
             check=curs.fetchall()
-            data_list=[]
-            for obj in check:##게시판 DB가져오기
-                data_dic={
-                    'date' : obj[0],
-                    'name' : obj[1],
-                    'checkin' : obj[2],
-                    'checkout' : obj[3],
-                    'check_explain' : obj[4]
-                }
-                data_list.append(data_dic)
+            data_list=DB_connection(check)
             conn.close()
             return render_template('admin.html',name=name,data_list=data_list)
-    
+
+##실행    
 if __name__=="__main__":
     from waitress import serve
     app.secret_key='super secret key'
