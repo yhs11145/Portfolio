@@ -5,7 +5,12 @@ import json
 import datetime
 from slacker import Slacker
 
-app=Flask(__name__)
+if getattr(sys, 'frozen', False):
+    template_folder = os.path.join(sys._MEIPASS, 'templates')
+    static_folder = os.path.join(sys._MEIPASS, 'static')
+    app = Flask(__name__, template_folder=template_folder,static_folder=static_folder)
+else:
+    app = Flask(__name__)
 
 ##함수선언
 def slack_data(ordermessage):
