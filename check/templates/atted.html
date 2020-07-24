@@ -13,6 +13,9 @@
     </head>
     <body>
     <script type="text/javascript">
+        function home(){
+            location.href="/"
+        }
         var status='{{status_result}}';
         if (status=="fail"){
             swal.fire({
@@ -37,6 +40,7 @@
                 <input type="text" name="explain" placeholder="할일을 적으세요" class="form-control">   
                 <input type="submit" style=margin:10px; name="checkin"  value="출근하기" class="btn btn-danger">
                 <input type="submit" style=margin:10px; name="checkin" value="퇴근하기" class="btn btn-danger">
+                <input type="button" style=margin:10px; onclick="home()" value="홈으로" class="btn btn-danger">
             </div>
         </form> 
         </form>

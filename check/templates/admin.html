@@ -11,6 +11,11 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
+    <script type="text/javascript">
+        function home(){
+            location.href="/"
+        }
+    </script>
     <body>
         <form name=selection method="post" action="/admincontrol" class="form-inline" style="width:100% float:none; margin:0 auto">
             <div class="form-group">
@@ -20,6 +25,7 @@
                 <input type="submit" style=margin:10px;  name="submit" value="기록삭제" class="btn btn-danger">
                 <input type="submit" style=margin:10px; name="submit" value="출근시간 수정" class="btn btn-danger">
                 <input type="submit" style=margin:10px;  name="submit" value="퇴근시간 초기화" class="btn btn-danger">
+                <input type="button" style=margin:10px; onclick="home()" value="홈으로" class="btn btn-danger">
             </div>
         </form>
         <table class="table table-striped">
@@ -40,6 +46,22 @@
                     <td>{{row.checkin}}</td>
                     <td>{{row.checkout}}</td>
                     <td>{{row.check_explain}}
+                </tr>
+                {% endfor %}    
+            </tbody>
+        </table>
+        <table class="table table-striped">
+            <thread>
+                <tr>
+                    <th>이름</th>
+                    <th>총 업무시간</th>
+                </tr>
+            </thread>
+            <tbody>
+                {% for row2 in data_list2 %}
+                <tr>
+                    <td>{{row2.name}}</td>
+                    <td>{{row2.time}}
                 </tr>
                 {% endfor %}    
             </tbody>

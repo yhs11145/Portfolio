@@ -41,17 +41,19 @@ def index():#메인홈페이지
         sql="select name,id,password from useradmin where id=%s and password=%s"##쿼리
         curs.execute(sql,(id,password))#DB 가져오기
         rows=curs.fetchall()
-        print(rows)
-        ##근태관리 페이지 게시판 가져오기
-        sql="select * from checkinout where name=%s"
-        curs.execute(sql,(rows[0][0]))
-        attends=curs.fetchall()
-        data_list=DB_connection(attends)
         conn.close()
-        print(data_list)
+        print(rows)
         for row in rows:##아이디 비밀번호 비교
             if id==row[1] and password==row[2]:
                 session['name']=row[0]
+                conn=connection()
+                curs=conn.cursor()
+                sql="select * from checkinout where name=%s"##근태관리 페이지 게시판 가져오기
+                curs.execute(sql,(row[0]))
+                attends=curs.fetchall()
+                data_list=DB_connection(attends)
+                conn.close()
+                print(data_list)
                 return render_template('atted.html',name=row[0],data_list=data_list)
                 #return redirect(url_for('user',idname=row[0]))
             else:
@@ -79,8 +81,10 @@ def join():
             print(id,password)
             conn=connection()
             curs=conn.cursor()
-            sql="insert into useradmin (name,id,password) values (%s, %s,%s)"
+            sql="insert into useradmin (name,id,password) values (%s, %s,%s)"##사용자DB 등록
             curs.execute(sql,(name,id,password))
+            sql="insert into worktime (name,time) values (%s,0)"##총업무시간DB 등록
+            curs.execute(sql,(name))
             conn.commit()
             conn.close()
             return render_template('join.html',id='ok')
@@ -100,16 +104,14 @@ def check(): ##출근페이지
                 curs=conn.cursor()
                 sql="insert into checkinout (date,name,checkin,check_explain) values (%s,%s,%s,%s)"
                 curs.execute(sql,(time.strftime('%Y-%m-%d',time.localtime(time.time())),name,datetime.datetime.now().strftime('%H:%M:%S'),check_explain))
-                slack_data(name+'출근완료')
+                slack_data(name+'출근완료 업무내용: '+check_explain)
                 conn.commit()
-                conn.close()
-                conn=connection()
-                curs=conn.cursor()
             except: ##출근확인 오류 ( 경고문 띄어주고 다시 리스트 출력)
                 sql="select * from checkinout where name=%s"
                 curs.execute(sql,(name))
                 attends=curs.fetchall()
                 data_list=DB_connection(attends)
+                conn.close()
                 return render_template('atted.html',name=name,status_result='fail',data_list=data_list)
             sql="select * from checkinout where name=%s"
             curs.execute(sql,(name))
@@ -123,24 +125,24 @@ def check(): ##출근페이지
             sql="update checkinout set checkout=%s where name=%s and date=%s"##퇴근시간 찍기
             curs.execute(sql,(datetime.datetime.now().strftime('%H:%M:%S'),name,time.strftime('%Y-%m-%d',time.localtime(time.time()))))
             conn.commit()
-            conn.close()
-            conn=connection()##업무시간 계산하기
-            curs=conn.cursor()
-            sql='select checkin,checkout from checkinout where name=%s and date=%s'##출근시간 퇴근시간 가져오기
+            sql='select checkin,checkout from checkinout where name=%s and date=%s'##출근시간 퇴근시간 가져오기##업무시간 계산하기
             curs.execute(sql,(name,time.strftime('%Y-%m-%d',time.localtime(time.time()))))
             rows=curs.fetchall()
-            conn.close()
             for row in rows:##퇴근시간-출근시간
                 worktime=row[1]-row[0]
-            conn=connection()
-            curs=conn.cursor()
             sql='update checkinout set worktime=%s where name=%s and date=%s'##업무시간 업데이트
             curs.execute(sql,(worktime,name,time.strftime('%Y-%m-%d',time.localtime(time.time()))))
             conn.commit()
-            conn.close()
             slack_data(name+'퇴근완료')##슬랙연동
-            conn=connection()
-            curs=conn.cursor()
+            sql='select worktime from checkinout where name=%s'
+            curs.execute(sql,(name))
+            sumtimes=curs.fetchall()
+            timeset=datetime.timedelta(0,0,0)##총 업무시간 더하기
+            for sumtime in sumtimes:
+                timeset+=sumtime[0]
+            sql="update worktime set time=%s where name=%s"
+            curs.execute(sql,(timeset,name))
+            conn.commit()
             sql="select * from checkinout where name=%s"##DB출력
             curs.execute(sql,(name))
             attends=curs.fetchall()
@@ -161,17 +163,25 @@ def admin():
         curs.execute(sql,(id,password))#DB 가져오기
         rows=curs.fetchall()
         print(rows)
-        conn=connection()
-        curs=conn.cursor()
         sql="select * from checkinout"
         curs.execute(sql)
         check=curs.fetchall()
         data_list=DB_connection(check)
+        sql='select * from worktime'
+        curs.execute(sql)
+        timedata=curs.fetchall()
+        data_list2=[]
+        for obj in timedata:
+            data_dic={
+                'name' : obj[0],
+                'time' : obj[1]
+            }
+            data_list2.append(data_dic)
         conn.close()
         for row in rows:##아이디 비밀번호 비교
             if id==row[0] and password==row[1]:
                 session['name']=row[0]
-                return render_template('admin.html',name=row[0],data_list=data_list)
+                return render_template('admin.html',name=row[0],data_list=data_list,data_list2=data_list2)
                 #return redirect(url_for('user',idname=row[0]))
             else:
                 return render_template('fail.html')
@@ -191,9 +201,6 @@ def admincontrol():
             sql="delete from checkinout where name=%s and date=%s"
             curs.execute(sql,(dataname,date))
             conn.commit()
-            conn.close()
-            conn=connection()
-            curs=conn.cursor()
             sql="select * from checkinout"
             curs.execute(sql)
             check=curs.fetchall()
@@ -207,9 +214,6 @@ def admincontrol():
             sql="update checkinout set checkin=%s where name=%s and date=%s" ##업데이트
             curs.execute(sql,(checkin,dataname,date))
             conn.commit()
-            conn.close()
-            conn=connection()
-            curs=conn.cursor()
             sql="select * from checkinout"
             curs.execute(sql)
             check=curs.fetchall()
@@ -222,9 +226,6 @@ def admincontrol():
             sql="update checkinout set checkout=NULL where name=%s and date=%s"
             curs.execute(sql,(dataname,date))
             conn.commit()
-            conn.close()
-            conn=connection()
-            curs=conn.cursor()
             sql="select * from checkinout"
             curs.execute(sql)
             check=curs.fetchall()
