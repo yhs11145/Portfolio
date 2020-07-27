@@ -5,7 +5,7 @@ excel.Visible=True
 url=input("경로를 입력하세요")
 wb=excel.workbooks.Open(url)
 ws=wb.ActiveSheet
-i=1
+i=2
 while(1):
     name=str(ws.Cells(i,1).Value)
     if ws.Cells(i,1).value is None:
