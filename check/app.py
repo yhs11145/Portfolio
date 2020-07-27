@@ -235,9 +235,24 @@ def admincontrol():
             curs.execute(sql)
             check=curs.fetchall()
             data_list=DB_connection(check)
+            sql='select * from worktime'
+            curs.execute(sql)
+            timedata=curs.fetchall()
+            data_list2=[]
+            for obj in timedata:
+                data_dic={
+                    'name' : obj[0],
+                    'time' : obj[1]
+                }
+                data_list2.append(data_dic)
             conn.close()
-            return render_template('admin.html',name=name,data_list=data_list)
+            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2)
 
+@app.route('/repy',methods=["GET",'POST'])
+def reply():
+    if request.method=='POST':
+        text=request.form['text']
+        slack_data("문의요청 :"+ text)
 ##실행    
 if __name__=="__main__":
     from waitress import serve

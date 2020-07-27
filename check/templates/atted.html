@@ -16,6 +16,21 @@
         function home(){
             location.href="/"
         }
+        function reply(){
+            const { value: text } = Swal.fire({
+                
+                input: 'textarea',
+                inputPlaceholder: 'Type your message here...',
+                inputAttributes: {
+                    'aria-label': 'Type your message here'
+                },
+                showCancelButton: true
+                })
+
+                if (text) {
+                Swal.fire(text)
+                }
+        }
         var status='{{status_result}}';
         if (status=="fail"){
             swal.fire({
@@ -41,6 +56,7 @@
                 <input type="submit" style=margin:10px; name="checkin"  value="출근하기" class="btn btn-danger">
                 <input type="submit" style=margin:10px; name="checkin" value="퇴근하기" class="btn btn-danger">
                 <input type="button" style=margin:10px; onclick="home()" value="홈으로" class="btn btn-danger">
+                <input type="button" style=margin:10px; onclick="reply()" value="문의하기" class="btn btn-danger">
             </div>
         </form> 
         </form>
