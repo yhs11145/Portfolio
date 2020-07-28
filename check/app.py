@@ -32,6 +32,17 @@ def DB_connection(attr):
         data_list.append(data_dic)
     return data_list
     
+def worktime(attr):
+    data_list=[]
+    for obj in attr:
+        data_dic={
+            'name' : obj[0],
+            'time' : obj[1],
+            'count' : obj[2]
+        }
+        data_list.append(data_dic)
+    return data_list
+
 def connection():
     return pymysql.connect(host='localhost',port=3306,user='selling',passwd='122919',db='sys',charset='utf8')
 
@@ -88,7 +99,7 @@ def join():
             curs=conn.cursor()
             sql="insert into useradmin (name,id,password) values (%s, %s,%s)"##사용자DB 등록
             curs.execute(sql,(name,id,password))
-            sql="insert into worktime (name,time) values (%s,0)"##총업무시간DB 등록
+            sql="insert into worktime (name,time,count) values (%s,0,0)"##총업무시간DB 등록
             curs.execute(sql,(name))
             conn.commit()
             conn.close()
@@ -152,6 +163,12 @@ def check(): ##출근페이지
             curs.execute(sql,(name))
             attends=curs.fetchall()
             data_list=DB_connection(attends)
+            sql="select COUNT(name) from checkinout where name=%s" ##업무일수 DB 넣어주기
+            curs.execute(sql,(name))
+            count=curs.fetchall()
+            sql="update worktime set count=%s where name=%s"
+            curs.execute(sql,(count,name))
+            conn.commit()
             conn.close()
             return render_template('atted.html',name=name,data_list=data_list)
     else:
@@ -168,20 +185,14 @@ def admin():
         curs.execute(sql,(id,password))#DB 가져오기
         rows=curs.fetchall()
         print(rows)
-        sql="select * from checkinout"
+        sql="select * from checkinout"##전체 리스트
         curs.execute(sql)
         check=curs.fetchall()
         data_list=DB_connection(check)
-        sql='select * from worktime'
+        sql='select * from worktime' ##업무일수 및 시간
         curs.execute(sql)
         timedata=curs.fetchall()
-        data_list2=[]
-        for obj in timedata:
-            data_dic={
-                'name' : obj[0],
-                'time' : obj[1]
-            }
-            data_list2.append(data_dic)
+        data_list2=worktime(timedata)
         conn.close()
         for row in rows:##아이디 비밀번호 비교
             if id==row[0] and password==row[1]:
@@ -210,8 +221,12 @@ def admincontrol():
             curs.execute(sql)
             check=curs.fetchall()
             data_list=DB_connection(check)
+            sql='select * from worktime' ##업무일수 및 시간
+            curs.execute(sql)
+            timedata=curs.fetchall()
+            data_list2=worktime(timedata)
             conn.close()
-            return render_template('admin.html',name=name,data_list=data_list)
+            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2)
         elif request.form['submit']=='출근시간 수정': ##출근시간 수정
             checkin=request.form['checkin'] ##수정할 시간 가져오기
             conn=connection()
@@ -223,8 +238,12 @@ def admincontrol():
             curs.execute(sql)
             check=curs.fetchall()
             data_list=DB_connection(check)
+            sql='select * from worktime' ##업무일수 및 시간
+            curs.execute(sql)
+            timedata=curs.fetchall()
+            data_list2=worktime(timedata)
             conn.close()
-            return render_template('admin.html',name=name,data_list=data_list)
+            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2)
         elif request.form['submit']=='퇴근시간 초기화': ##퇴근시간 초기화 (인정안할경우
             conn=connection()
             curs=conn.cursor()
@@ -235,20 +254,14 @@ def admincontrol():
             curs.execute(sql)
             check=curs.fetchall()
             data_list=DB_connection(check)
-            sql='select * from worktime'
+            sql='select * from worktime'##업무일수
             curs.execute(sql)
             timedata=curs.fetchall()
-            data_list2=[]
-            for obj in timedata:
-                data_dic={
-                    'name' : obj[0],
-                    'time' : obj[1]
-                }
-                data_list2.append(data_dic)
+            data_list2=worktime(timedata)
             conn.close()
             return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2)
 
-@app.route('/repy',methods=["GET",'POST'])
+@app.route('/reply',methods=["GET",'POST'])
 def reply():
     if request.method=='POST':
         text=request.form['text']

@@ -55,6 +55,7 @@
             <thread>
                 <tr>
                     <th>이름</th>
+                    <th>총 업무일수</th>
                     <th>총 업무시간</th>
                 </tr>
             </thread>
@@ -62,7 +63,8 @@
                 {% for row2 in data_list2 %}
                 <tr>
                     <td>{{row2.name}}</td>
-                    <td>{{row2.time}}
+                    <td>{{row2.count}} 일</td>
+                    <td>{{row2.time}}</td>
                 </tr>
                 {% endfor %}    
             </tbody>
