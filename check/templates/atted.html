@@ -17,19 +17,7 @@
             location.href="/"
         }
         function reply(){
-            const { value: text } = Swal.fire({
-                
-                input: 'textarea',
-                inputPlaceholder: 'Type your message here...',
-                inputAttributes: {
-                    'aria-label': 'Type your message here'
-                },
-                showCancelButton: true
-                })
-
-                if (text) {
-                Swal.fire(text)
-                }
+            location.href='/reply'
         }
         var status='{{status_result}}';
         if (status=="fail"){

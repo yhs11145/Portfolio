@@ -263,9 +263,10 @@ def admincontrol():
 
 @app.route('/reply',methods=["GET",'POST'])
 def reply():
-    if request.method=='POST':
-        text=request.form['text']
-        slack_data("문의요청 :"+ text)
+    name=session['name']
+     
+    return render_template('reply.html',name=name)
+
 ##실행    
 if __name__=="__main__":
     from waitress import serve
