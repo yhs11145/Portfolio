@@ -263,9 +263,12 @@ def admincontrol():
 
 @app.route('/reply',methods=["GET",'POST'])
 def reply():
-    name=session['name']
-     
-    return render_template('reply.html',name=name)
+    name=session['name']##문의내용 보내기
+    if request.method=="POST":
+        replyanswer=request.form['replyanswer']
+        slack_data('문의자 : '+name+' 문의내용 :'+replyanswer)
+        return redirect(url_for('index')) ##홈페이지로
+    return render_template('reply.html',name=name)  ##문의하기 게시판이동
 
 ##실행    
 if __name__=="__main__":

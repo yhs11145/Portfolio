@@ -12,25 +12,39 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
     <script type="text/javascript">
-        
+        function answer(){
+            var replyform=document.selection;
+            var replyanswer=replyform.replyanswer.value;
+            swal.fire(
+                '문의가 접수되었습니다.',
+                '첫 페이지로 이동합니다.',
+                'success'
+            ).then((result)=>{
+                replyform.submit()
+            })
+        }
+        function cancel(){
+            location.href="/"
+        }
     </script>
     <body>
-        <form name=selection  class="form-horizontal" style="width:50%;">
+        <form name=selection  method="POST" class="form-horizontal" style="width:50%;">
             <div class="form-group">
                 <label class="col-sm-2 control-label">작성자</label>
                 <div class="col-sm-10">
-                    <p class="form-control-static">{{name}}</p>
+                    <p class="form-control-static" name="name">{{name}}</p>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">문의내용</label>
             </div>
             <div class="form-group">
-               <textarea class="form-control" rows="10" ></textarea>
+               <textarea class="form-control" rows="10" name="replyanswer"></textarea>
             </div>
             <div class="form-group">
                 <input type="button" style=margin:10px; onclick="answer()" value="전송하기" class="btn btn-danger">  
                 <input type="button" style=margin:10px; onclick="cancel()" value="취소하기" class="btn btn-danger">  
+            </div>
         </form>
     </body>
 </html>
