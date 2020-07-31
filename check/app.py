@@ -43,6 +43,15 @@ def worktime(attr):
         data_list.append(data_dic)
     return data_list
 
+def checkname(attr):
+    data_list=[]
+    for obj in attr:
+        data_dic={
+            'name' : obj[0]
+        }
+        data_list.append(data_dic)
+    return data_list
+
 def connection():
     return pymysql.connect(host='localhost',port=3306,user='selling',passwd='122919',db='sys',charset='utf8')
 
@@ -193,11 +202,15 @@ def admin():
         curs.execute(sql)
         timedata=curs.fetchall()
         data_list2=worktime(timedata)
+        sql="select name from worktime"##이름 가져오기
+        curs.execute(sql)
+        selectname=curs.fetchall()
+        selectname=checkname(selectname)
         conn.close()
         for row in rows:##아이디 비밀번호 비교
             if id==row[0] and password==row[1]:
                 session['name']=row[0]
-                return render_template('admin.html',name=row[0],data_list=data_list,data_list2=data_list2)
+                return render_template('admin.html',name=row[0],data_list=data_list,data_list2=data_list2,selectnames=selectname)
                 #return redirect(url_for('user',idname=row[0]))
             else:
                 return render_template('fail.html')
@@ -211,6 +224,17 @@ def admincontrol():
         name=session['name']
         date=request.form['date']
         dataname=request.form['name']
+        conn=connection()##이름 가져오기
+        curs=conn.cursor()
+        sql="select name from worktime"
+        curs.execute(sql)
+        selectname=curs.fetchall()
+        selectname=checkname(selectname)
+        sql='select * from worktime' ##업무일수 및 시간
+        curs.execute(sql)
+        timedata=curs.fetchall()
+        data_list2=worktime(timedata)
+        conn.close()
         if request.form['submit']=='기록삭제':##해당 사용자 행 삭제
             conn=connection()
             curs=conn.cursor()
@@ -221,12 +245,8 @@ def admincontrol():
             curs.execute(sql)
             check=curs.fetchall()
             data_list=DB_connection(check)
-            sql='select * from worktime' ##업무일수 및 시간
-            curs.execute(sql)
-            timedata=curs.fetchall()
-            data_list2=worktime(timedata)
             conn.close()
-            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2)
+            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2,selectnames=selectname)
         elif request.form['submit']=='출근시간 수정': ##출근시간 수정
             checkin=request.form['checkin'] ##수정할 시간 가져오기
             conn=connection()
@@ -238,12 +258,8 @@ def admincontrol():
             curs.execute(sql)
             check=curs.fetchall()
             data_list=DB_connection(check)
-            sql='select * from worktime' ##업무일수 및 시간
-            curs.execute(sql)
-            timedata=curs.fetchall()
-            data_list2=worktime(timedata)
             conn.close()
-            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2)
+            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2,selectnames=selectname)
         elif request.form['submit']=='퇴근시간 초기화': ##퇴근시간 초기화 (인정안할경우
             conn=connection()
             curs=conn.cursor()
@@ -254,12 +270,17 @@ def admincontrol():
             curs.execute(sql)
             check=curs.fetchall()
             data_list=DB_connection(check)
-            sql='select * from worktime'##업무일수
-            curs.execute(sql)
-            timedata=curs.fetchall()
-            data_list2=worktime(timedata)
             conn.close()
-            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2)
+            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2,selectnames=selectname)
+        elif request.form['submit']=='조회하기':##조회하기 기능
+            conn=connection()
+            curs=conn.cursor()
+            sql="select * from checkinout where date=%s and name=%s"
+            curs.execute(sql,(date,dataname))
+            search=curs.fetchall()
+            data_list=DB_connection(search)
+            conn.close()
+            return render_template('admin.html',name=name,data_list=data_list,data_list2=data_list2,selectnames=selectname)
 
 @app.route('/reply',methods=["GET",'POST'])
 def reply():

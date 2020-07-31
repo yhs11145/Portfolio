@@ -14,21 +14,28 @@
     <script type="text/javascript">
         function home(){
             location.href="/"
-        }
-        
+        }  
     </script>
     <body>
         <form name=selection method="post" action="/admincontrol" class="form-inline" style="width:100% float:none; margin:0 auto">
             <div class="form-group">
-                <input style=margin:10px; type="text" name="date" placeholder="해당날짜" class="form-control">
-                <input style=margin:10px; type="text" name="name" placeholder="이름" class="form-control">
-                <input style=margin:10px; type="text" name="checkin" placeholder="출근시간수정" class="form-control">
+                <label class="form-contrl">조회할 날짜 :</label>
+                <input style=margin:10px; type="date" id="date" name="date" placeholder="해당 날짜" class="form-control">
+                <label class="form-contrl">이름 :</label>
+                <select class="form-control" name="name">
+                    {% for selectname in selectnames %}
+                        <option value="{{selectname.name}}">{{selectname.name}}</option>
+                    {% endfor %}
+                <label class="form-contrl">출근시간수정 :</label>
+                <input style=margin:10px; type="time" name="checkin" placeholder="출근시간수정" class="form-control">
+                <input type="submit" style=margin:10px;  name="submit" value="조회하기" class="btn btn-danger">
                 <input type="submit" style=margin:10px;  name="submit" value="기록삭제" class="btn btn-danger">
                 <input type="submit" style=margin:10px; name="submit" value="출근시간 수정" class="btn btn-danger">
                 <input type="submit" style=margin:10px;  name="submit" value="퇴근시간 초기화" class="btn btn-danger">
                 <input type="button" style=margin:10px; onclick="home()" value="홈으로" class="btn btn-danger">
             </div>
         </form>
+                  
         <table class="table table-striped">
             <thread>
                 <tr>
