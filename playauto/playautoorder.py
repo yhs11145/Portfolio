@@ -16,7 +16,7 @@ def slack_data(ordermessage):
     slack.chat.post_message('#pythonmessage',ordermessage)
 
 id="sellallmaster@gmail.com"
-pw="akdntmzlqhem1@"
+pw=""
 driver.get('https://app.playauto.io/login.html')
 time.sleep(2)
 driver.find_element_by_name("email").send_keys(id)
