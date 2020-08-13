@@ -163,14 +163,7 @@ class Ui_MainWindow(object):
 
     def PUSH(self):
         idx=self.comboBox.currentIndex()
-        id=[['formidab','dlgoal890@@'],['kyl5479@nate.com','rladufma12'],['wpdhksl1004@naver.com','5flanwnd'],['park27402@naver.com','trend700'],['hong3437@naver.com','gmltmd0812!'],
-            ['nma9090@hanmail.net','tmddksla00'],['laboum23@naver.com','jym82051516'],['myk777@naver.com','kk411212!'],['marketnature','@@trend700'],['minicbj@naver.com','jymkk051516kk@'],
-            ['cofbsdl1','trend2019!'],['11xlesangm@naver.com','claeo1@3'],['dorothy385','claeo1@3'],['hkw0101@gmail.com','!ghkd02161230'],['tkdgjs354@naver.com','tkdgjs9430'],['yoome123@naver.com','dowk123'],
-            ['god3078@gmail.com','tmddksla00!'],['yegyu9933@hanmail.net','shwk1323911!'],['jys8358@naver.com','xgb1021'],['intelmc9293@naver.com','trend700'],['jskss123@nate.com','trend700'],['kyik8385@naver.com','aa05130214*'],
-            ['qpil552@gmail.com','qwer6135!!'],['89summerkim@gmail.com','rladufma12##'],['leehaming@naver.com','goldbiga001'],['tjswn1226@naver.com','tjswn2003'],['secret4477','bunny12!'],['hhhsa00@naver.com','tmddksla00!'],
-            ['lee0313','lhj0313'],['kambo99@naver.com','rladufma12##'],['tjdrbs0707@naver.com','emp!701711'],['jskss52@naver.com','chlgPfls0912'],['dlaudgo84@naver.com','tei0210!'],['lee_ham@hanmail.net','trend700'],
-            ['moodo_@hanmail.net','dlaudtn1'],['yd21c85','wjddudals1!'],['jhkimduke@gmail.com','gusdk330!!'],['kyongjungok@naver.com','wjddudals1!'],['trendhunting','@@trend700'],['passion110@naver.com','wjddudals1!'],
-            ['getho1@hanmail.net','wjddudals1!'],['xpoctopus@naver.com','wjddudals1!']]##아이디,비밀번호
+        id=[['']]##아이디,비밀번호
         data1=self.lineEdit.text()
         data2=self.lineEdit_2.text()
         
