@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request,flash,request,url_for,redirect,session
 from flask.wrappers import Response
 import requests
 from bs4 import BeautifulSoup
@@ -14,16 +14,21 @@ def index():
 def info():
     return 'Info'
 
-@app.route('/search')
+@app.route('/search',methods=['POST', 'GET'])
 def search():
-    search="마스크"
-    values={
-          'query': search
-          }
-    response=requests.get('https://shopping.naver.com/search/all?',params=values)##네이버
-    print(response.url)
-    soup=BeautifulSoup(response.text,"html.parser")
-    return soup.text
+    if request.method=='POST':
+        search=request.form['search']
+        values={
+            'query': search
+            }
+        response=requests.get('https://shopping.naver.com/search/all?',params=values)##네이버
+        print(response.url)
+        soup=BeautifulSoup(response.text,"html.parser")
+        for name in soup.select('.basicList_title__3P9Q7'):
+            print(name.text.strip())
+        for price in soup.select('.price_num__2WUXn'):
+            print(price.text.strip())
+        return soup.text
 
 
 if __name__=="__main__":
