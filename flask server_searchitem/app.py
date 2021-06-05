@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request,flash,request,url_for,redirect,session
 from flask.wrappers import Response
 import requests
+import sys,os,time
 from bs4 import BeautifulSoup
 
 
@@ -28,7 +29,7 @@ def search():
             print(name.text.strip())
         for price in soup.select('.price_num__2WUXn'):
             print(price.text.strip())
-        return soup.text
+        return response.text
 
 
 if __name__=="__main__":
