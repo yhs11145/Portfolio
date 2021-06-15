@@ -39,4 +39,4 @@ clf.fit(xor_data1,xor_label)
 pre=clf.predict(xor_data1)
 
 ac_score=metrics.accuracy_score(xor_label,pre)
-print("정답률: ",ac_score)##test11upalrr
+print("정답률: ",ac_score)##test11upalrrtest2
