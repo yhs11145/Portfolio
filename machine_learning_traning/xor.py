@@ -40,3 +40,8 @@ pre=clf.predict(xor_data1)
 
 ac_score=metrics.accuracy_score(xor_label,pre)
 print("정답률: ",ac_score)##git 연동 테스트 확인 자동
+
+
+### sklearn.model_selection import train_test_split
+
+### train_test_split(test_data,test_label)
